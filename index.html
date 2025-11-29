@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Duchess’s English Creations</title>
+  <style>
+    /* === GLOBAL STYLES === */
+    :root {
+      --bg: #ebeab9;
+      --accent1: #734b80; /* purple */
+      --accent2: #acb2bd; /* grey-blue */
+      --text-light: #fff;
+      --text-dark: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .crown {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin: 0 5px;
+      vertical-align: middle;
+      fill: var(--accent1);
+    }
+
+    /* === HEADER === */
+    header {
+      background-image: url('https://i.postimg.cc/SKXxnTYG/Snimok-ekrana-2025-11-29-v-23-40-39.png');
+      background-size: cover;
+      background-position: center;
+      color: var(--text-light);
+      text-align: center;
+      padding: 3rem 1.5rem;
+      position: relative;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(115, 75, 128, 0.45); /* semi-transparent overlay for readability */
+    }
+
+    header > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    }
+
+    header p {
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* === PRODUCT GRID === */
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.2rem;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--accent2);
+      border-radius: 10px;
+      width: 290px;
+      padding: 1.2rem;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.07);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+      color: var(--accent1);
+    }
+
+    .product-card p {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      color: #444;
+    }
+
+    .price {
+      font-weight: bold;
+      color: var(--accent1);
+      font-size: 1.15rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .btn {
+      background-color: var(--accent1);
+      color: white;
+      border: none;
+      padding: 0.55rem 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #5a3a66;
+    }
+
+    /* === MODAL === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.65);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 92%;
+      max-width: 720px;
+      position: relative;
+      animation: fadeIn 0.4s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .close {
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      font-size: 26px;
+      font-weight: bold;
+      color: var(--accent1);
+      cursor: pointer;
+    }
+
+    .carousel {
+      position: relative;
+      margin-bottom: 1.6rem;
+      height: 320px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .carousel-inner {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s ease;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel-slide img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      background: var(--accent1);
+      color: white;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-weight: bold;
+      cursor: pointer;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    .prev { left: 12px; }
+    .next { right: 12px; }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--accent1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === HEADER WITH BACKGROUND IMAGE === -->
+  <header>
+    <h1><span class="crown">👑</span> Duchess’s English Creations <span class="crown">👑</span></h1>
+    <p>Elegant, creative language resources for curious minds</p>
+  </header>
+
+  <!-- === PRODUCT CARDS === -->
+  <main class="products">
+
+    <!-- Midnight Celebration Quest -->
+    <div class="product-card">
+      <img src="https://i.postimg.cc/8cWjYymY/Quest-Christmas.png" alt="Midnight Celebration Quest">
+      <h3>🎄 Midnight Celebration Quest</h3>
+      <p>Interactive Quest for A2/B1 level for teens and adults with creative tasks, writing tasks and speaking practice, all connected to Christmas and New Year topic.</p>
+      <div class="price">$12.00</div>
+      <button class="btn" onclick="openModal(0)">Buy Now</button>
+    </div>
+
+    <!-- Festive Speaking Challenge -->
+    <div class="product-card">
+      <img src="https://i.postimg.cc/jSRL84wf/Quest-Christmas-kopia.png" alt="Festive Speaking Activity">
+      <h3>🎁 Festive Speaking Challenge</h3>
+      <p>A speaking practice activity in which students come up with three things to speak about topics connected to the festive season.</p>
+      <div class="price">$8.50</div>
+      <button class="btn" onclick="openModal(1)">Buy Now</button>
+    </div>
+
+    <!-- ADD MORE CARDS BELOW IF NEEDED -->
+
+  </main>
+
+  <!-- === MODAL === -->
+  <div id="productModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+
+      <div class="carousel">
+        <div class="carousel-inner" id="carouselSlides"></div>
+        <button class="carousel-btn prev" onclick="changeSlide(-1)">‹</button>
+        <button class="carousel-btn next" onclick="changeSlide(1)">›</button>
+      </div>
+
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <div class="price" id="modalPrice"></div>
+      <button class="btn" onclick="alert('Link will be added later!')">Buy Now</button>
+    </div>
+  </div>
+
+  <footer>
+    Crafted with care by Her Grace <span class="crown">👑</span>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        title: "Midnight Celebration Quest",
+        description: "Interactive Quest for A2/B1 level for teens and adults with creative tasks, writing tasks and speaking practice, all connected to Christmas and New Year topic. The students have to move the clock hands and to do the tasks to move them to 00:00 to start the celebration. The quest is easily adaptable for offline classes.",
+        price: "$12.00",
+        images: ["https://i.postimg.cc/8cWjYymY/Quest-Christmas.png"]
+      },
+      {
+        title: "Festive Speaking Challenge",
+        description: "A speaking practice activity in which the students will have to come up with three things to speak about topics and things connected to the festive season.",
+        price: "$8.50",
+        images: ["https://i.postimg.cc/jSRL84wf/Quest-Christmas-kopia.png"]
+      }
+    ];
+
+    let currentSlide = 0;
+    let currentProductIndex = 0;
+
+    function openModal(productIndex) {
+      const modal = document.getElementById("productModal");
+      const product = products[productIndex];
+      currentProductIndex = productIndex;
+      currentSlide = 0;
+
+      document.getElementById("modalTitle").textContent = product.title;
+      document.getElementById("modalDescription").textContent = product.description;
+      document.getElementById("modalPrice").textContent = product.price;
+
+      const slidesContainer = document.getElementById("carouselSlides");
+      slidesContainer.innerHTML = "";
+      product.images.forEach(imgUrl => {
+        const slide = document.createElement("div");
+        slide.className = "carousel-slide";
+        slide.innerHTML = `<img src="${imgUrl}" alt="Product image">`;
+        slidesContainer.appendChild(slide);
+      });
+
+      modal.style.display = "block";
+      updateCarousel();
+    }
+
+    function closeModal(event) {
+      const modal = document.getElementById("productModal");
+      if (!event || event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    function changeSlide(direction) {
+      const total = products[currentProductIndex].images.length;
+      currentSlide = (currentSlide + direction + total) % total;
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const slidesContainer = document.getElementById("carouselSlides");
+      const offset = -currentSlide * 100;
+      slidesContainer.style.transform = `translateX(${offset}%)`;
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
+
+</body>
+</html>
